@@ -1,0 +1,6 @@
+---
+import Navbar from '../components/Navbar.astro';
+import Layout from '../layouts/Layout.astro';
+import Catalogo from '../components/Catalogo.jsx';
+---
+<Layout title="Multiventas JL | Catálogo"><Navbar /><header class="hero-shop page-shell"><p class="eyebrow">Huánuco · Av. Tito Jaime 584</p><h1>Multiventas JL</h1><p>Accesorios y equipos celulares para tu día a día.</p><a class="button" href="#catalogo">Explorar catálogo</a></header><main id="catalogo" class="page-shell"><Catalogo client:load /></main></Layout>

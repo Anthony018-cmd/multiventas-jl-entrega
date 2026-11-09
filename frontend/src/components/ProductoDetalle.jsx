@@ -1,0 +1,10 @@
+import { useEffect, useState } from 'react';
+import { listarProductos } from '../services/apiProductos';
+
+export default function ProductoDetalle({ productoId }) {
+  const [producto, setProducto] = useState(null); const [cantidad, setCantidad] = useState(1); const [mensaje, setMensaje] = useState('Cargando ficha...');
+  useEffect(() => { listarProductos().then((productos) => { const encontrado = productos.find((item) => String(item.id) === String(productoId)); setProducto(encontrado || null); setMensaje(encontrado ? '' : 'Producto no encontrado'); }).catch((error) => setMensaje(error.message)); }, [productoId]);
+  function agregarAlCarrito() { const carrito = JSON.parse(localStorage.getItem('multiventas-carrito') || '[]'); const existente = carrito.find((item) => item.id === producto.id); if (existente) existente.cantidad += cantidad; else carrito.push({ id: producto.id, nombre: producto.nombre, precio: producto.precio, stock: producto.stock, cantidad }); localStorage.setItem('multiventas-carrito', JSON.stringify(carrito)); setMensaje('Producto agregado al carrito.'); }
+  if (!producto) return <p className="feedback">{mensaje}</p>;
+  return <section className="detail-card"><a className="back-link" href="/">← Volver al catálogo</a><div className="detail-layout"><div className="product-image large">{producto.imagen ? <img src={producto.imagen} alt={producto.nombre} /> : <span>Multiventas JL</span>}</div><div><p className="product-category">{producto.categoria}</p><h1>{producto.nombre}</h1><p className="detail-description">Producto disponible para recojo en tienda o envío por Shalom.</p><p className="product-price">S/ {Number(producto.precio).toFixed(2)}</p><p className="stock">Stock disponible: {producto.stock}</p><label className="quantity">Cantidad <input type="number" min="1" max={producto.stock} value={cantidad} onChange={(event) => setCantidad(Math.max(1, Math.min(producto.stock, Number(event.target.value))))} /></label><button className="button" type="button" onClick={agregarAlCarrito}>Agregar al carrito</button>{mensaje && <p className="feedback">{mensaje}</p>}</div></div></section>;
+}

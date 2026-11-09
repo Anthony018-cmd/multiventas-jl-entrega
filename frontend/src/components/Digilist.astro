@@ -1,0 +1,36 @@
+---
+ // Importar elementos
+---
+<div class="area-digimon flex flex-col items-center">
+    <button type="button" id="getDigimons" 
+        class="bg-black text-white text-2xl p-6 rounded-xl">
+        Traer digimons
+    </button>
+    <div id="digimon-list" class="grid grid-cols-3 gap-4"></div>
+</div>
+<script>
+    const areaDigimon = document.getElementById("digimon-list");
+    const btnGetDigimons = document.getElementById("getDigimons") as HTMLButtonElement;
+    btnGetDigimons.addEventListener('click', async () => {
+        traerDigimons();
+    });
+
+    async function traerDigimons() {
+        const lista = await fetch("https://digi-api.com/api/v1/digimon");
+        const data = await lista.json();
+        if ( areaDigimon ) {
+            areaDigimon.innerHTML = "";
+            data["content"].forEach((digimon:any) => {
+                let tarjeta = document.createElement("div");
+                tarjeta.classList.add("bg-white", "p-4", "rounded-lg", "text-center", "border");
+                tarjeta.innerHTML = `<h3 class="font-bold">${digimon.name}</h3>
+                <div>
+                    <img src="${digimon.image}" class="w-32 h-32 object-contain" alt="${digimon.name}" />
+                </div>
+                `;
+
+                areaDigimon.appendChild(tarjeta);
+            });
+        }
+    }
+</script>
