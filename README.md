@@ -28,3 +28,10 @@ npm.cmd run dev -- --host 127.0.0.1 --port 4321
 Abrir `http://127.0.0.1:4321/`.
 
 Repositorio: https://github.com/hinojosacajamariafernanda-cell/multiventas-jl
+
+## Evidencias
+
+- [Inicio y catálogo](docs/capturas/01-inicio-catalogo.png)
+- [Ficha de producto](docs/capturas/02-ficha-producto.png)
+- [Carrito](docs/capturas/03-carrito.png)
+- [Entrega en la plataforma](docs/capturas/04-entrega-plataforma.png)
